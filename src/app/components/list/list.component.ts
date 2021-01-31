@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith, switchMap, map } from 'rxjs/operators';
 import { Commodity } from 'src/app/models/commodity';
+import { PriceMovement } from 'src/app/models/PriceMovement';
 import { CommodityService } from 'src/app/service/commodity.service';
 
 @Component({
@@ -17,12 +18,35 @@ export class ListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    interval(500).pipe(
+    interval(5000).pipe(
       startWith(0),
       switchMap(() => this.cService.getCommodity())
     ).subscribe(res => {
-      console.table(res);
-      this.commodities = res;
+
+      this.commodities = res.map(e => new Commodity(e)).map(com => {
+        const currItem = this.commodities.find(e => e.id === com.id);
+        if (currItem) {
+          let movement: PriceMovement;
+          if (com.price > currItem.price) {
+            movement = PriceMovement.Up;
+          } else if (com.price < currItem.price) {
+            movement = PriceMovement.Down;
+          } else {
+            movement = PriceMovement.NoChange
+          }
+
+          return Object.assign({}, com, {
+            price_movement: movement,
+            price: com.price,
+            isFavorite: com.isFavorite
+          });
+        }
+        return com;
+
+      }).sort((a, b) => {
+        return a.id > b.id ? 1 : -1;
+      })
+
     })
   }
 

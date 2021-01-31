@@ -19,9 +19,9 @@ export class ListitemComponent implements OnInit {
   }
 
   public toggleFavorite(item: Commodity) {
-    this.ChangedCommodity.emit(Object.assign({}, item, {
+    this.ChangedCommodity.emit(new Commodity(Object.assign({}, item, {
       isFavorite: !item.isFavorite
-    }));
+    })));
   }
 
 }
