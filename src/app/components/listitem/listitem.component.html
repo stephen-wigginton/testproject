@@ -1,0 +1,9 @@
+<div class="row">
+  <mat-icon class="heart" (click)="toggleFavorite(commodity)" *ngIf="commodity.isFavorite">favorite</mat-icon>
+  <mat-icon class="heart" (click)="toggleFavorite(commodity)" *ngIf="!commodity.isFavorite">favorite_border</mat-icon>
+  <span>{{commodity.name}}</span>
+  <span>{{commodity.price | currency}}</span>
+  <mat-icon *ngIf="commodity.price_movement === priceMovement.Up" class="success">arrow_upward</mat-icon>
+  <mat-icon *ngIf="commodity.price_movement === priceMovement.Down" class="danger">arrow_downward</mat-icon>
+  <mat-icon *ngIf="commodity.price_movement === priceMovement.NoChange">remove</mat-icon>
+</div>

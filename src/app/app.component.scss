@@ -1,0 +1,13 @@
+.side-bar {
+  min-width: 800px !important;
+  height: 100%;
+
+  mat-drawer {
+    background-color: #F1F5F8;
+    border-right: .5px solid #DAE0E5;
+  }
+
+  mat-drawer-content {
+    background-color: white;
+  }
+}

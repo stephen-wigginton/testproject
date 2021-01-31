@@ -1,0 +1,12 @@
+<div class="content">
+  <p>Commodity Prices</p>
+  <div *ngFor="let commodity of commodities">
+    <app-listitem (ChangedCommodity)="handleUpdatedFavorite($event)" *ngIf="commodity.isFavorite"
+      [commodity]="commodity"></app-listitem>
+  </div>
+  <mat-divider></mat-divider>
+  <div *ngFor="let commodity of commodities">
+    <app-listitem (ChangedCommodity)="handleUpdatedFavorite($event)" *ngIf="!commodity.isFavorite"
+      [commodity]="commodity"></app-listitem>
+  </div>
+</div>
